@@ -1,5 +1,8 @@
 const shell = require('shelljs');
 
+shell.config.silent = true;
+shell.config.fatal = true;
+
 module.exports = {
   startDB: () => {
     shell.exec('npx sequelize --env test db:create');

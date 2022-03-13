@@ -18,3 +18,5 @@ app.all('*', (_req, res) => res.status(404).json({ message: '404 NotFound :(' })
 app.use(errorMiddleware);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
+
+module.exports = app;

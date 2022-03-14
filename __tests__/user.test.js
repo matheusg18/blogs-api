@@ -142,7 +142,7 @@ describe('/user Testes', () => {
   });
 
   describe('GET /user', () => {
-    commonTests.testToken('/user');
+    commonTests.testToken('get', '/user');
 
     before(startDB);
     after(dropDB);
@@ -159,7 +159,7 @@ describe('/user Testes', () => {
   });
 
   describe('GET /user/:id', () => {
-    commonTests.testToken('/user/1');
+    commonTests.testToken('get', '/user/1');
 
     before(startDB);
     after(dropDB);

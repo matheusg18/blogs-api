@@ -49,4 +49,24 @@ describe('/categories Testes', () => {
       });
     });
   });
+
+  describe('GET /categories', () => {
+    commonTests.testToken('get', '/categories');
+
+    describe('quando da tudo certo', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('retorna um array de categorias com status 200', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .get('/categories')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.categoriesGetResponse);
+      });
+    });
+  });
 });

@@ -49,4 +49,15 @@ module.exports = {
     id: 3,
     name: 'Comunidade',
   },
+
+  categoriesGetResponse: [
+    {
+      id: 1,
+      name: 'Inovação',
+    },
+    {
+      id: 2,
+      name: 'Escola',
+    },
+  ],
 };

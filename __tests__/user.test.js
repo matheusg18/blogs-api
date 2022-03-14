@@ -3,7 +3,8 @@ const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 const app = require('../src/index');
 const fakeData = require('./utils/fakeData');
-const { startDB, dropDB } = require('./utils/testUtils');
+const { startDB, dropDB, getToken } = require('./utils/testUtils');
+const commonTests = require('./utils/commonTests');
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -136,6 +137,23 @@ describe('/user Testes', () => {
         expect(status).to.be.equal(409);
         expect(body).to.have.property('message');
         expect(body.message).to.be.equal('User already registered');
+      });
+    });
+  });
+
+  describe('GET /user', () => {
+    commonTests.testToken('/user');
+
+    before(startDB);
+    after(dropDB);
+
+    describe('quando da tudo certo', () => {
+      it('retorna um array de users', async () => {
+        const token = await getToken();
+        const { body, status } = await chai.request(app).get('/user').set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.userGetResponse);
       });
     });
   });

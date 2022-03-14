@@ -105,12 +105,49 @@ describe('/post Testes', () => {
       before(startDB);
       after(dropDB);
 
-      it.only('retorna um array posts com status 200', async () => {
+      it('retorna um array posts com status 200', async () => {
         const token = await getToken();
         const { body, status } = await chai.request(app).get('/post').set({ authorization: token });
 
         expect(status).to.be.equal(200);
         expect(body).to.be.deep.equal(fakeData.postGetResponse);
+      });
+    });
+  });
+
+  describe('GET /post/:id', () => {
+    commonTests.testToken('get', '/post/1');
+
+    describe('quando da tudo certo (id = 1)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('retorna objeto com as informações do post com status 200', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .get('/post/1')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.postGetIdResponse);
+      });
+    });
+
+    describe('quando não existe um post com o id passado (id = 999)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('deve retornar uma mensagem de erro com status 404', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .get('/post/999')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(404);
+        expect(body).to.have.property('message');
+        expect(body.message).to.be.equal('Post does not exist');
       });
     });
   });

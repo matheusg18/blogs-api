@@ -157,4 +157,24 @@ describe('/user Testes', () => {
       });
     });
   });
+
+  describe('GET /user/:id', () => {
+    commonTests.testToken('/user/1');
+
+    before(startDB);
+    after(dropDB);
+
+    describe('quando da tudo certo (id = 1)', () => {
+      it('retorna um objeto com as informações do user', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .get('/user/1')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.userGetIdResponse);
+      });
+    });
+  });
 });

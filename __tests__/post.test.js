@@ -97,7 +97,21 @@ describe('/post Testes', () => {
       });
     });
   });
-});
 
-// caso de sucesso
-// category id not found
+  describe('GET /post', () => {
+    commonTests.testToken('get', '/post');
+
+    describe('quando da tudo certo', () => {
+      before(startDB);
+      after(dropDB);
+
+      it.only('retorna um array posts com status 200', async () => {
+        const token = await getToken();
+        const { body, status } = await chai.request(app).get('/post').set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.postGetResponse);
+      });
+    });
+  });
+});

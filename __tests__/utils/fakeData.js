@@ -60,4 +60,17 @@ module.exports = {
       name: 'Escola',
     },
   ],
+
+  postPostRequest: {
+    title: 'Como fazer miojo',
+    content: 'Esquente a água, cozinhe por 3 minutos, adicione o tempero e pronto!',
+    categoryIds: [1, 2],
+  },
+
+  postPostResponse: {
+    id: 3,
+    userId: 2,
+    title: 'Como fazer miojo',
+    content: 'Esquente a água, cozinhe por 3 minutos, adicione o tempero e pronto!',
+  },
 };

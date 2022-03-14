@@ -5,16 +5,19 @@ module.exports = {
     password: '123456',
     image: 'https://upload.wikimedia.org/wikipedia/pt/0/02/Homer_Simpson_2006.png',
   },
+
   loginPostRequest: {
     email: 'MichaelSchumacher@gmail.com',
     password: '123456',
   },
+
   invalidEmails: [
     'homersimpson',
     ' #@%^%#$@#$@#.com',
     '@homer.com',
     'homer simpson <email@example.com>',
   ],
+
   userGetResponse: [
     {
       id: 1,
@@ -30,6 +33,7 @@ module.exports = {
       image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg',
     },
   ],
+
   userGetIdResponse: {
     id: 1,
     displayName: 'Lewis Hamilton',

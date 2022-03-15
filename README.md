@@ -67,7 +67,7 @@ Testes:
 
 #### Realizar cadastro
 
-```http
+```curl
   POST /user
 ```
 
@@ -84,7 +84,7 @@ Exemplo de body:
 
 #### Fazer login
 
-```http
+```curl
   POST /login
 ```
 
@@ -103,19 +103,19 @@ Exemplo de body:
 
 #### Listar os usuários cadastrados
 
-```http
+```curl
   GET /user
 ```
 
 #### Listar um usuário pelo seu id
 
-```http
+```curl
   GET /user/{id}
 ```
 
 #### Registrar uma nova categoria
 
-```http
+```curl
   POST /categories
 ```
 
@@ -129,6 +129,6 @@ Exemplo de body:
 
 #### Listar as categorias cadastrados
 
-```http
+```curl
   GET /categories
 ```

@@ -177,4 +177,24 @@ describe('/user Testes', () => {
       });
     });
   });
+
+  describe.only('DELETE /user/me', () => {
+    commonTests.testToken('delete', '/user/me');
+
+    before(startDB);
+    after(dropDB);
+
+    describe('quando da tudo certo', () => {
+      it('retorna status 204', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .delete('/user/me')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(204);
+        expect(body).to.be.deep.equal({});
+      });
+    });
+  });
 });

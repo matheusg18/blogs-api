@@ -14,6 +14,7 @@ module.exports = {
     database: process.env.MYSQL_SCHEMA_TEST,
     host: process.env.HOSTNAME,
     dialect: 'mysql',
+    logging: false,
   },
   production: {
     username: process.env.MYSQL_USER,
@@ -21,5 +22,6 @@ module.exports = {
     database: process.env.MYSQL_SCHEMA,
     host: process.env.HOSTNAME,
     dialect: 'mysql',
+    logging: false,
   },
 };

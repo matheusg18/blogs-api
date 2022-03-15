@@ -13,6 +13,8 @@
   },
   "scripts": {
     "start": "node src/index.js",
+    "test": "NODE_ENV=test mocha --timeout 20000 __tests__/**/*$NAME*.test.js --exit",
+    "test:coverage": "nyc --reporter=html --reporter=text npm test",
     "debug": "nodemon src/index.js"
   },
   "devDependencies": {

@@ -12,7 +12,9 @@
     "shelljs": "0.8.4"
   },
   "scripts": {
+    "prestart": "sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
     "start": "node src/index.js",
+    "drop": "sequelize db:drop",
     "test": "NODE_ENV=test mocha --timeout 20000 __tests__/**/*$NAME*.test.js --exit",
     "test:coverage": "nyc --reporter=html --reporter=text npm test",
     "debug": "nodemon src/index.js"

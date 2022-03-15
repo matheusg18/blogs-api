@@ -65,7 +65,7 @@ Testes:
 
 ## Endpoints
 
-#### Realizar cadastro
+### Realizar cadastro
 
 ```curl
   POST /user
@@ -82,7 +82,7 @@ Exemplo de body:
 }
 ```
 
-#### Fazer login
+### Fazer login
 
 ```curl
   POST /login
@@ -101,19 +101,25 @@ Exemplo de body:
 
 **Os endpoints abaixo precisam que o token gerado ao fazer login ou ao se registrar seja passado no header `Authorization`.**
 
-#### Listar os usuários cadastrados
+### Listar os usuários cadastrados
 
 ```curl
   GET /user
 ```
 
-#### Listar um usuário pelo seu id
+### Listar um usuário pelo seu id
 
 ```curl
   GET /user/{id}
 ```
 
-#### Registrar uma nova categoria
+### Deletar o seu próprio usuário
+
+```curl
+  DELETE /user/me
+```
+
+### Registrar uma nova categoria
 
 ```curl
   POST /categories
@@ -127,8 +133,65 @@ Exemplo de body:
 }
 ```
 
-#### Listar as categorias cadastrados
+### Listar as categorias cadastrados
 
 ```curl
   GET /categories
+```
+
+### Criar um post
+
+```curl
+  POST /post
+```
+
+Exemplo de body:
+
+```json
+{
+  "title": "Hollow Kngiht",
+  "content": "Best metroidvania game ever made.",
+  "categoryIds": [1, 2]
+}
+```
+
+### Listar todos os posts
+
+```curl
+  GET /post
+```
+
+### Listar um post pelo seu id
+
+```curl
+  GET /post/{id}
+```
+
+### Pesquisar por posts em que o `title` ou `content` for igual ao `searchTerm`
+
+```curl
+  GET post/search?q=searchTerm
+```
+
+### Atualizar um post específico
+
+```curl
+  PUT /post/{id}
+```
+
+Exemplo de body:
+
+```json
+{
+  "title": "Hollow Kngiht",
+  "content": "Best metroidvania game ever made."
+}
+```
+
+**Observação: não é possível mudar as categoryIds e apenas o autor do post pode alterá-lo.**
+
+### Deletar um post específico
+
+```curl
+  DELETE /post/{id}
 ```

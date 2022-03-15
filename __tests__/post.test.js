@@ -152,7 +152,7 @@ describe('/post Testes', () => {
     });
   });
 
-  describe.only('PUT /post/:id', () => {
+  describe('PUT /post/:id', () => {
     commonTests.testToken('put', '/post/1');
 
     describe('ao enviar um body inválido (id = 1)', () => {
@@ -312,6 +312,74 @@ describe('/post Testes', () => {
 
         expect(status).to.be.equal(204);
         expect(body).to.be.deep.equal({});
+      });
+    });
+  });
+
+  describe('GET /post/search?q=:searchTerm', () => {
+    commonTests.testToken('get', '/post/search?q=:searchTerm');
+
+    describe('ao pesquisar por um title que existe', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('retorna um array posts com status 200', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .get('/post/search?q=Post%20do%20Ano')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.postGetTitleResponse);
+      });
+    });
+
+    describe('ao pesquisar por um content que existe', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('retorna um array posts com status 200', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .get('/post/search?q=Foguete%20n%C3%A3o%20tem%20r%C3%A9')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.postGetContentResponse);
+      });
+    });
+
+    describe('ao pesquisar por um title/content que não existe', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('retorna um array vazio com status 200', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .get('/post/search?q=Xablau')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal([]);
+      });
+    });
+
+    describe('ao deixar o query parameter vazio', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('retorna um array com todos os posts com status 200', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .get('/post/search?q=')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.postGetResponse);
       });
     });
   });

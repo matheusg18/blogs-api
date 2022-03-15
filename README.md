@@ -170,7 +170,7 @@ Exemplo de body:
 ### Pesquisar por posts em que o `title` ou `content` for igual ao `searchTerm`
 
 ```curl
-  GET post/search?q=searchTerm
+  GET /post/search?q={searchTerm}
 ```
 
 ### Atualizar um post específico
@@ -195,3 +195,5 @@ Exemplo de body:
 ```curl
   DELETE /post/{id}
 ```
+
+**Observação: apenas o autor do post pode deletá-lo.**

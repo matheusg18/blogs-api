@@ -188,7 +188,7 @@ Exemplo de body:
 }
 ```
 
-**Observação: não é possível mudar as categoryIds e apenas o autor do post pode alterá-lo.**
+**Observação: apenas o autor do post pode alterá-lo e não é possível mudar as categoryIds.**
 
 ### Deletar um post específico
 

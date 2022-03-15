@@ -65,15 +65,70 @@ Testes:
 
 ## Endpoints
 
-#### Realiza o cadastro
+#### Realizar cadastro
 
 ```http
   POST /user
 ```
 
-|             | Parâmetro     | Tipo     | Descrição            |
-| :---------- | :------------ | :------- | :------------------- |
-| Body (JSON) | `displayName` | `string` | Nome de usuário      |
-| Body (JSON) | `email`       | `string` | Email do usuário     |
-| Body (JSON) | `password`    | `string` | Senha do usuário     |
-| Body (JSON) | `image`       | `string` | Link para uma imagem |
+Exemplo de body:
+
+```json
+{
+  "displayName": "Lewis Hamilton",
+  "email": "lewishaamilton@gmail.com",
+  "password": "123456",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+}
+```
+
+#### Fazer login
+
+```http
+  POST /login
+```
+
+Exemplo de body:
+
+```json
+{
+  "email": "lewishaamilton@gmail.com",
+  "password": "123456"
+}
+```
+
+---
+
+**Os endpoints abaixo precisam que o token gerado ao fazer login ou ao se registrar seja passado no header `Authorization`.**
+
+#### Listar os usuários cadastrados
+
+```http
+  GET /user
+```
+
+#### Listar um usuário pelo seu id
+
+```http
+  GET /user/{id}
+```
+
+#### Registrar uma nova categoria
+
+```http
+  POST /categories
+```
+
+Exemplo de body:
+
+```json
+{
+  "name": "Comunicação"
+}
+```
+
+#### Listar as categorias cadastrados
+
+```http
+  GET /categories
+```

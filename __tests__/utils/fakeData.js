@@ -140,4 +140,21 @@ module.exports = {
       },
     ],
   },
+
+  postPutRequest: {
+    title: 'Como fazer suco Tang',
+    content: 'Ponha 1l de água na jarra, misture o pozinho e tá pronto!',
+  },
+
+  postPutResponse: {
+    title: 'Como fazer suco Tang',
+    content: 'Ponha 1l de água na jarra, misture o pozinho e tá pronto!',
+    userId: 1,
+    categories: [
+      {
+        id: 1,
+        name: 'Inovação',
+      },
+    ],
+  },
 };

@@ -151,4 +151,96 @@ describe('/post Testes', () => {
       });
     });
   });
+
+  describe('PUT /post/:id', () => {
+    commonTests.testToken('put', '/post/1');
+
+    describe('ao enviar um body inválido (id = 1)', () => {
+      before(startDB);
+      after(dropDB);
+
+      describe('não passar o title', () => {
+        it('deve retornar uma mensagem de erro com status 400', async () => {
+          const token = await getToken();
+          const { body, status } = await chai
+            .request(app)
+            .put('/post/1')
+            .set({ authorization: token })
+            .send({ ...fakeData.postPutRequest, title: undefined });
+
+          expect(status).to.be.equal(400);
+          expect(body).to.have.property('message');
+          expect(body.message).to.be.equal('"title" is required');
+        });
+      });
+
+      describe('não passar o content', () => {
+        it('deve retornar uma mensagem de erro com status 400', async () => {
+          const token = await getToken();
+          const { body, status } = await chai
+            .request(app)
+            .put('/post/1')
+            .set({ authorization: token })
+            .send({ ...fakeData.postPutRequest, content: undefined });
+
+          expect(status).to.be.equal(400);
+          expect(body).to.have.property('message');
+          expect(body.message).to.be.equal('"content" is required');
+        });
+      });
+    });
+
+    describe('ao mandar categoryIds (não é permitido mudá-las) (id = 1)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('deve retornar uma mensagem de erro com status 400', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .put('/post/1')
+          .set({ authorization: token })
+          .send({ ...fakeData.postPutRequest, categoryIds: [1] });
+
+        expect(status).to.be.equal(400);
+        expect(body).to.have.property('message');
+        expect(body.message).to.be.equal('Categories cannot be edited');
+      });
+    });
+
+    describe('quando um usuário não autor do post tentar atualizá-lo (id = 1)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('deve retornar uma mensagem de erro com status 401', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .put('/post/1')
+          .set({ authorization: token })
+          .send(fakeData.postPutRequest);
+
+        expect(status).to.be.equal(401);
+        expect(body).to.have.property('message');
+        expect(body.message).to.be.equal('Unauthorized user');
+      });
+    });
+
+    describe('quando consegue atualizar com sucesso (id = 1)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('deve retornar um objeto com as informações do post atualizado com status 200', async () => {
+        const token = await getToken({ email: 'lewishamilton@gmail.com', password: '123456' });
+        const { body, status } = await chai
+          .request(app)
+          .put('/post/1')
+          .set({ authorization: token })
+          .send(fakeData.postPutRequest);
+
+        expect(status).to.be.equal(200);
+        expect(body).to.be.deep.equal(fakeData.postPutResponse);
+      });
+    });
+  });
 });

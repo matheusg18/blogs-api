@@ -20,5 +20,12 @@ module.exports = {
     shell.exec('npx sequelize --env test db:drop');
   },
 
-  getToken: async () => (await chai.request(app).post('/login').send(loginPostRequest)).body.token,
+  getToken: async (altBody) => {
+    const { body } = await chai
+      .request(app)
+      .post('/login')
+      .send(altBody || loginPostRequest);
+
+    return body.token;
+  },
 };

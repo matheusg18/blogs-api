@@ -178,7 +178,7 @@ describe('/user Testes', () => {
     });
   });
 
-  describe.only('DELETE /user/me', () => {
+  describe('DELETE /user/me', () => {
     commonTests.testToken('delete', '/user/me');
 
     before(startDB);

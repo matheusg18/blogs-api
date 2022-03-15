@@ -152,7 +152,7 @@ describe('/post Testes', () => {
     });
   });
 
-  describe('PUT /post/:id', () => {
+  describe.only('PUT /post/:id', () => {
     commonTests.testToken('put', '/post/1');
 
     describe('ao enviar um body inválido (id = 1)', () => {
@@ -226,6 +226,24 @@ describe('/post Testes', () => {
       });
     });
 
+    describe('quando não existe um post com o id passado (id = 999)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('deve retornar uma mensagem de erro com status 404', async () => {
+        const token = await getToken({ email: 'lewishamilton@gmail.com', password: '123456' });
+        const { body, status } = await chai
+          .request(app)
+          .put('/post/999')
+          .set({ authorization: token })
+          .send(fakeData.postPutRequest);
+
+        expect(status).to.be.equal(404);
+        expect(body).to.have.property('message');
+        expect(body.message).to.be.equal('Post does not exist');
+      });
+    });
+
     describe('quando consegue atualizar com sucesso (id = 1)', () => {
       before(startDB);
       after(dropDB);
@@ -240,6 +258,60 @@ describe('/post Testes', () => {
 
         expect(status).to.be.equal(200);
         expect(body).to.be.deep.equal(fakeData.postPutResponse);
+      });
+    });
+  });
+
+  describe('DELETE /post/:id', () => {
+    commonTests.testToken('delete', '/post/1');
+
+    describe('quando um usuário não autor do post tentar deletá-lo (id = 1)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('deve retornar uma mensagem de erro com status 401', async () => {
+        const token = await getToken();
+        const { body, status } = await chai
+          .request(app)
+          .delete('/post/1')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(401);
+        expect(body).to.have.property('message');
+        expect(body.message).to.be.equal('Unauthorized user');
+      });
+    });
+
+    describe('quando não existe um post com o id passado (id = 999)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('deve retornar uma mensagem de erro com status 404', async () => {
+        const token = await getToken({ email: 'lewishamilton@gmail.com', password: '123456' });
+        const { body, status } = await chai
+          .request(app)
+          .delete('/post/999')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(404);
+        expect(body).to.have.property('message');
+        expect(body.message).to.be.equal('Post does not exist');
+      });
+    });
+
+    describe('quando da tudo certo (id = 1)', () => {
+      before(startDB);
+      after(dropDB);
+
+      it('retorna status 204', async () => {
+        const token = await getToken({ email: 'lewishamilton@gmail.com', password: '123456' });
+        const { body, status } = await chai
+          .request(app)
+          .delete('/post/1')
+          .set({ authorization: token });
+
+        expect(status).to.be.equal(204);
+        expect(body).to.be.deep.equal({});
       });
     });
   });

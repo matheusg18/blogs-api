@@ -149,7 +149,7 @@ Exemplo de body:
 
 ```json
 {
-  "title": "Hollow Kngiht",
+  "title": "Hollow Knight",
   "content": "Best metroidvania game ever made.",
   "categoryIds": [1, 2]
 }
@@ -183,7 +183,7 @@ Exemplo de body:
 
 ```json
 {
-  "title": "Hollow Kngiht",
+  "title": "Hollow Knight",
   "content": "Best metroidvania game ever made."
 }
 ```
